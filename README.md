@@ -4,7 +4,7 @@ Adjust keyrepeat and delay until repeat, **without** requiring a user logout or 
 
 Confirmed working on MacOS Sierra (10.12.3), but should also work on prior versions.
 
-This utility achieves the same effect as modifying *NSGlobalDomain*:
+This utility achieves the same effect as modifying _NSGlobalDomain_:
 
 ```
 # these commands require a relog or reboot to take effect.
@@ -13,9 +13,13 @@ defaults write NSGlobalDomain InitialKeyRepeat -int 10
 ```
 
 ## Usage
+
 ```
     # print version
     krp -v | --version
+
+    # print current
+    krp -p | --print
 
     # set repeat rate to 15ms, fastest value in system pref = 2 (30ms)
     krp -r | --repeat-rate 1
@@ -28,6 +32,7 @@ defaults write NSGlobalDomain InitialKeyRepeat -int 10
 ```
 
 ## Install
+
 ```
     brew install koekeishiya/formulae/krp
 ```

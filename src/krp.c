@@ -17,7 +17,8 @@ void change_key_repeat_delay(char *arg)
 {
     int16_t rate;
 
-    if (sscanf(arg, "%hd", &rate) != 1) {
+    if (sscanf(arg, "%hd", &rate) != 1)
+    {
         fprintf(stderr, "invalid keyrepeat delay '%s'\n", arg);
         return;
     }
@@ -36,7 +37,8 @@ void change_key_repeat_rate(char *arg)
 {
     int16_t rate;
 
-    if (sscanf(arg, "%hd", &rate) != 1) {
+    if (sscanf(arg, "%hd", &rate) != 1)
+    {
         fprintf(stderr, "invalid keyrepeat rate '%s'\n", arg);
         return;
     }
@@ -51,29 +53,50 @@ void change_key_repeat_rate(char *arg)
     printf("keyrepeat rate: %hd -> %hd\n", old_rate, rate);
 }
 
+void print_current_settings()
+{
+    int16_t old_thresh_rate = LMGetKeyThresh();
+    int16_t old_rep_rate = LMGetKeyRepThresh();
+
+    printf("keyrepeat threshold: %hd\n", old_thresh_rate);
+    printf("keyrepeat  repeaaat: %hd\n", old_rep_rate);
+}
+
 int parse_arguments(int count, char **args)
 {
     int option;
-    const char *short_options = "r:d:v";
-    struct option long_options[] =
-    {
-        { "repeat-rate", required_argument, NULL, 'r' },
-        { "delay-until-repeat", required_argument, NULL, 'd' },
-        { "version", no_argument, NULL, 'v' },
-        { NULL, 0, NULL, 0 }
-    };
+    const char *short_options = "r:d:v:p";
+    struct option long_options[] = {
+        {"repeat-rate", required_argument, NULL, 'r'},
+        {"delay-until-repeat", required_argument, NULL, 'd'},
+        {"version", no_argument, NULL, 'v'},
+        {"print", no_argument, NULL, 'p'},
+        {NULL, 0, NULL, 0}};
 
-    while ((option = getopt_long(count, args, short_options, long_options, NULL)) != -1) {
-        switch (option) {
-        case 'r': {
+    while ((option = getopt_long(count, args, short_options, long_options, NULL)) != -1)
+    {
+        switch (option)
+        {
+        case 'r':
+        {
             change_key_repeat_rate(optarg);
-        } break;
-        case 'd': {
+        }
+        break;
+        case 'd':
+        {
             change_key_repeat_delay(optarg);
-        } break;
-        case 'v': {
+        }
+        break;
+        case 'v':
+        {
             printf("krp version %d.%d.%d\n", KRP_MAJOR, KRP_MINOR, KRP_PATCH);
-        } break;
+        }
+        break;
+        case 'p':
+        {
+            print_current_settings();
+        }
+        break;
         }
     }
 
@@ -82,7 +105,8 @@ int parse_arguments(int count, char **args)
 
 int main(int count, char **args)
 {
-    if (count < 2) {
+    if (count < 2)
+    {
         fprintf(stderr, "Usage: krp -r | --repeat-rate <level>\n"
                         "       krp -d | --delay-until-repeat <level>\n\n"
                         "<level>: 1 = 15ms, 2 = 30ms etc..\n");
