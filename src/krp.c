@@ -58,8 +58,10 @@ void print_current_settings()
     int16_t old_thresh_rate = LMGetKeyThresh();
     int16_t old_rep_rate = LMGetKeyRepThresh();
 
-    printf("keyrepeat threshold: %hd\n", old_thresh_rate);
-    printf("keyrepeat  repeaaat: %hd\n", old_rep_rate);
+    printf("delay until repeat [ -d ]: %3hd\n", old_thresh_rate);
+    printf("repeat rate        [ -r ]: %3hd\n", old_rep_rate);
+    printf("\n");
+    printf("<level>: 1 = 15ms, 2 = 30ms etc..\n");
 }
 
 int parse_arguments(int count, char **args)
@@ -108,7 +110,8 @@ int main(int count, char **args)
     if (count < 2)
     {
         fprintf(stderr, "Usage: krp -r | --repeat-rate <level>\n"
-                        "       krp -d | --delay-until-repeat <level>\n\n"
+                        "       krp -d | --delay-until-repeat <level>\n"
+                        "       krp -p | --print \n\n"
                         "<level>: 1 = 15ms, 2 = 30ms etc..\n");
         exit(1);
     }
